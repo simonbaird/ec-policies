@@ -59,7 +59,7 @@ deny[{"msg": msg}] {
 	not registry_is_allowed(registry_without_tag)
 
 	msg := sprintf(
-		"Step %d has disallowed registry '%s' for log index %s on %s",
+		"Step %s has disallowed registry '%s' for log index %s on %s",
 		[step_index, registry, attestation.log_index, attestation.rekor_host],
 	)
 }
@@ -72,9 +72,8 @@ registry_is_allowed(registry) {
 # for task images used to run task steps
 #
 allowed_registries = [
+
 	"quay.io/redhat-appstudio",
 	"registry.access.redhat.com/ubi8",
 	"registry.access.redhat.com/ubi8-minimal",
-	"registry.redhat.io/openshift-pipelines",
-	"registry.redhat.io/openshift4",
 ]
