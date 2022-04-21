@@ -15,4 +15,7 @@ allowed_registries := [
 	"registry.access.redhat.com/ubi8-minimal",
 	"registry.redhat.io/openshift-pipelines",
 	"registry.redhat.io/openshift4",
+	"registry.redhat.io/ocp-tools-4-tech-preview",
+	"registry.redhat.io/rhel8",
+	"docker.io/library",
 ]
