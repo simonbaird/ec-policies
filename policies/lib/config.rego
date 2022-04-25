@@ -16,4 +16,7 @@ allowed_registries := [
 	"registry.redhat.io/openshift-pipelines",
 	"registry.redhat.io/openshift4",
 	"quay.io/buildah",
+	"registry.redhat.io/ocp-tools-4-tech-preview",
+	"registry.redhat.io/rhel8",
+	"docker.io/library",
 ]
