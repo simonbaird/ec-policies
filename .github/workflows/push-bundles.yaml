@@ -8,6 +8,8 @@ on:
     paths:
     - policy
 
+  workflow_dispatch:
+
 jobs:
   push-policy-bundles:
     runs-on: ubuntu-latest
