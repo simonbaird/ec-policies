@@ -260,7 +260,7 @@ push-bundle-%:
 	  [[ -n $$( git status --porcelain $(POLICY_DIR)/$${d} ) ]] && \
 	    echo "Aborting due to uncommitted changes in $(POLICY_DIR)/$${d}!" && \
 	      exit 1; \
-	  cp -r $(POLICY_DIR)/$${d} $${TMP_DIR}/$(POLICY_DIR)/$${d}; \
+	  cp -r $(POLICY_DIR)/$${d} $${TMP_DIR}/$${d}; \
 	done && \
 	\
 	echo "Pushing $(*) policies to $${TARGET}" && \
