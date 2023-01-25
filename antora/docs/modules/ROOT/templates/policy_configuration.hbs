@@ -180,8 +180,6 @@ file:
 }
 ----
 
-Currently there are not many "collections" defined, but in future there may be more.
-
 The predefined collections are:
 
 [cols="2,6"]
@@ -189,8 +187,13 @@ The predefined collections are:
 |*Name*
 |*Description*
 
+| `minimal`
+| Includes a minimal set of policy rules to ensure the build pipeline is
+functioning as expected, and able to produce signed attestations of the
+expected type.
+
 | `slsa_1`
-| Includes policy rules required to meet SLSA Level 1
+| Includes policy rules required to meet SLSA Level 1.
 
 | `slsa_2`
 | Includes policy rules required to meet SLSA Level 2. Special attention must
