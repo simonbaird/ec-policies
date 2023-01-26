@@ -89,6 +89,7 @@ const helpers = {
 
     const output = []
     const packageAnnotations = {}
+    const collectionLists = {}
 
     // First pass to collect all the package annotations
     rawData.forEach((a) => {
@@ -122,6 +123,7 @@ const helpers = {
           const warningOrFailure = isWarn ? "warning" : "failure"
           const failureMsg = a.annotations.custom.failure_msg
           const effectiveOn = a.annotations.custom.effective_on
+          const collections = a.annotations.custom.collections
           const file = a.location.file
           const row = a.location.row
 
@@ -148,7 +150,7 @@ const helpers = {
           output.push({
             fullPath, packagePath, packageInfo,
             shortName, title, description, anchor, ruleData, warningOrFailure,
-            failureMsg, effectiveOn, file, row
+            failureMsg, effectiveOn, collections, file, row
           })
         }
       }
@@ -160,6 +162,20 @@ const helpers = {
     // Group the rules by their package
     return helpers.groupBy(sortedOutput, a => a.packagePath)
 
+  },
+
+  processCollectionLists: (annotationsData) => {
+    const collectionLists = {}
+
+    Object.keys(annotationsData).forEach(packagePath => {
+      annotationsData[packagePath].forEach(a => {
+        (a.collections || []).forEach(c => {
+          (collectionLists[c] ||= []).push({anchor: a.anchor, title: a.title, pkgTitle: a.packageInfo.title})
+        })
+      })
+    })
+
+    return collectionLists
   },
 
   processBundlesData: (rawData) => {
@@ -236,6 +252,10 @@ module.exports.register = function() {
     const pipelineAnnotations = helpers.processAnnotationsData(rawAnnotationsData, "policy.pipeline")
     const releaseAnnotations = helpers.processAnnotationsData(rawAnnotationsData, "policy.release")
 
+    // Prepare some collection lists
+    const pipelineCollections = helpers.processCollectionLists(pipelineAnnotations)
+    const releaseCollections = helpers.processCollectionLists(releaseAnnotations)
+
     //------------------------------------------------------------------
     // Find and load the acceptable bundle and rule collection data
     //
@@ -247,7 +267,7 @@ module.exports.register = function() {
     const acceptableBundles = helpers.processBundlesData(rawBundlesData)
 
     // Make the data available at higher scope
-    allData = { pipelineAnnotations, releaseAnnotations, acceptableBundles }
+    allData = { pipelineAnnotations, pipelineCollections, releaseAnnotations, releaseCollections, acceptableBundles }
 
     //------------------------------------------------------------------
     // Setup Handlebars helpers and partials
